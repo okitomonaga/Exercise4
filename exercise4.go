@@ -70,6 +70,44 @@ func generateBanString(ban [][]int) []string {
 	return result
 }
 
+func isWin(ban [][]int) bool {
+	for i := 0; i < 3; i++ {
+		if ban[i][0] == ban[i][1] && ban[i][0] == ban[i][2] && ban[i][0] != 0 {
+			return true
+		}
+		if ban[0][i] == ban[1][i] && ban[0][i] == ban[2][i] && ban[0][i] != 0 {
+			return true
+		}
+	}
+
+	if ban[0][0] == ban[1][1] && ban[0][0] == ban[2][2] && ban[0][0] != 0 {
+		return true
+	}
+
+	if ban[0][2] == ban[1][1] && ban[0][2] == ban[2][0] && ban[0][2] != 0 {
+		return true
+	}
+
+	return false
+}
+
+func isDraw(ban [][]int) bool {
+
+	if isWin(ban) {
+		return false
+	}
+
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 3; j++ {
+			if ban[i][j] == 0 {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
 func main() {
 	inputPut := make([]int, 2)
 	//ban := make([][]int, 9)
@@ -91,7 +129,15 @@ func main() {
 		//おけた時の処理
 		if canPut(inputPut, ban) {
 			copy(ban, storeBan(inputPut, playernum, ban))
-			if playernum == 1 {
+			if isWin(ban) {
+				fmt.Printf("Player %d won.\n", playernum)
+				break
+			}
+			if isDraw(ban) {
+				fmt.Println("Draw.")
+				break
+			}
+			if playernum == 1 { //ここで先手・後手交代
 				playernum = 2
 			} else {
 				playernum = 1
@@ -101,8 +147,8 @@ func main() {
 		}
 
 		copy(outputString, generateBanString(ban))
-		for i := 0; i < len(outputString); i++ {
-			fmt.Println(outputString[i])
+		for j := 0; j < len(outputString); j++ {
+			fmt.Println(outputString[j])
 		}
 		//勝利条件を満たしたときbreak
 	}
