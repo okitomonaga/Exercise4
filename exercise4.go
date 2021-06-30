@@ -70,6 +70,27 @@ func generateBanString(ban [][]int) []string {
 	return result
 }
 
+func isWin(ban [][]int) bool {
+	for i := 0; i < 3; i++ {
+		if ban[i][0] == ban[i][1] && ban[i][0] == ban[i][2] && ban[i][0] != 0 {
+			return true
+		}
+		if ban[0][i] == ban[1][i] && ban[0][i] == ban[2][i] && ban[0][i] != 0 {
+			return true
+		}
+	}
+
+	if ban[0][0] == ban[1][1] && ban[0][0] == ban[2][2] && ban[0][0] != 0 {
+		return true
+	}
+
+	if ban[0][2] == ban[1][1] && ban[0][2] == ban[2][0] && ban[0][2] != 0 {
+		return true
+	}
+
+	return false
+}
+
 func main() {
 	inputPut := make([]int, 2)
 	//ban := make([][]int, 9)
