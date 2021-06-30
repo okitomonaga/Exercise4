@@ -11,14 +11,21 @@ func conrvetIntSlice(str string) []int {
 
 	var result []int
 	slice := strings.Split(str, ",")
-	r1, _ := strconv.Atoi(slice[0])
-	r2, _ := strconv.Atoi(slice[1])
+	if len(slice) != 2 {
+		return []int{-1, -1}
+	}
+	r1, error1 := strconv.Atoi(slice[0])
+	r2, error2 := strconv.Atoi(slice[1])
+	if error1 != nil || error2 != nil {
+		return []int{-1, -1}
+	}
 	result = append(result, r1)
 	result = append(result, r2)
 	return result
+
 }
 
-func storeBan(input []int, player int) [][]int {
+func storeBan(input []int, player int, ban [][]int) [][]int {
 
 	result := [][]int{
 		{0, 0, 0},
@@ -26,9 +33,20 @@ func storeBan(input []int, player int) [][]int {
 		{0, 0, 0},
 	}
 
+	//result := make([][]int, 9)
+
+	copy(result, ban)
+
 	result[input[0]][input[1]] = player //
 
 	return result
+}
+
+func canPut(input []int, ban [][]int) bool {
+	if input[0] > 2 || input[1] > 2 || input[0] < 0 || input[1] < 0 {
+		return false
+	}
+	return ban[input[0]][input[1]] == 0
 }
 
 func generateBanString(ban [][]int) []string {
@@ -54,16 +72,47 @@ func generateBanString(ban [][]int) []string {
 
 func main() {
 	inputPut := make([]int, 2)
-	ban := make([][]int, 9)
+	//ban := make([][]int, 9)
+	ban := [][]int{
+		{0, 0, 0},
+		{0, 0, 0},
+		{0, 0, 0},
+	}
 	outputString := make([]string, 3)
 
-	fmt.Print("Player 1: Input (x,y) : ")
-
 	var input string
-	fmt.Scan(&input)
 
-	copy(inputPut, conrvetIntSlice(input))
-	copy(ban, storeBan(inputPut, 1))
+	playernum := 1          ///先手から開始
+	for i := 0; true; i++ { //無限ループ
+		fmt.Printf("Player %d: Input (x,y) : ", playernum)
+		fmt.Scan(&input)
+		copy(inputPut, conrvetIntSlice(input))
+
+		//おけた時の処理
+		if canPut(inputPut, ban) {
+			copy(ban, storeBan(inputPut, playernum, ban))
+			if playernum == 1 {
+				playernum = 2
+			} else {
+				playernum = 1
+			}
+		} else {
+			fmt.Println("input is invalid.")
+		}
+
+		copy(outputString, generateBanString(ban))
+		for i := 0; i < len(outputString); i++ {
+			fmt.Println(outputString[i])
+		}
+		//勝利条件を満たしたときbreak
+	}
+
+	//fmt.Print("Player 1: Input (x,y) : ")
+
+	//fmt.Scan(&input)
+
+	//copy(inputPut, conrvetIntSlice(input))
+	//copy(ban, storeBan(inputPut, 1))
 	copy(outputString, generateBanString(ban))
 	for i := 0; i < len(outputString); i++ {
 		fmt.Println(outputString[i])
