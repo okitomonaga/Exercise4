@@ -21,13 +21,13 @@ func TestConvert2(t *testing.T) {
 }
 
 func TestStoreBan1(t *testing.T) {
-	result := storeBan([]int{1, 2}, 1)
+	result := storeBan([]int{1, 2}, 1, [][]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}})
 	if result[1][2] != 1 { //ox関係なく、おかれているかどうかを判定
 		t.Error("TestStoreBan1 is failed")
 	}
 }
 func TestStoreBan2(t *testing.T) {
-	result := storeBan([]int{1, 1}, 2)
+	result := storeBan([]int{1, 1}, 2, [][]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}})
 	if result[1][1] != 2 { //ox関係なく、おかれているかどうかを判定
 		t.Error("TestStoreBan2 is failed")
 	}

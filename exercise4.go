@@ -18,13 +18,17 @@ func conrvetIntSlice(str string) []int {
 	return result
 }
 
-func storeBan(input []int, player int) [][]int {
+func storeBan(input []int, player int, ban [][]int) [][]int {
 
 	result := [][]int{
 		{0, 0, 0},
 		{0, 0, 0},
 		{0, 0, 0},
 	}
+
+	//result := make([][]int, 9)
+
+	copy(result, ban)
 
 	result[input[0]][input[1]] = player //
 
@@ -54,16 +58,41 @@ func generateBanString(ban [][]int) []string {
 
 func main() {
 	inputPut := make([]int, 2)
-	ban := make([][]int, 9)
+	//ban := make([][]int, 9)
+	ban := [][]int{
+		{0, 0, 0},
+		{0, 0, 0},
+		{0, 0, 0},
+	}
 	outputString := make([]string, 3)
 
-	fmt.Print("Player 1: Input (x,y) : ")
-
 	var input string
-	fmt.Scan(&input)
 
-	copy(inputPut, conrvetIntSlice(input))
-	copy(ban, storeBan(inputPut, 1))
+	playernum := 1          ///先手から開始
+	for i := 0; true; i++ { //無限ループ
+		fmt.Printf("Player %d: Input (x,y) : ", playernum)
+		fmt.Scan(&input)
+		copy(inputPut, conrvetIntSlice(input))
+		copy(ban, storeBan(inputPut, playernum, ban))
+		if playernum == 1 {
+			playernum = 2
+		} else {
+			playernum = 1
+		}
+
+		copy(outputString, generateBanString(ban))
+		for i := 0; i < len(outputString); i++ {
+			fmt.Println(outputString[i])
+		}
+		//勝利条件を満たしたときbreak
+	}
+
+	//fmt.Print("Player 1: Input (x,y) : ")
+
+	//fmt.Scan(&input)
+
+	//copy(inputPut, conrvetIntSlice(input))
+	//copy(ban, storeBan(inputPut, 1))
 	copy(outputString, generateBanString(ban))
 	for i := 0; i < len(outputString); i++ {
 		fmt.Println(outputString[i])
