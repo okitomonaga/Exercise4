@@ -55,6 +55,7 @@ func generateBanString(ban [][]int) []string {
 func main() {
 	inputPut := make([]int, 2)
 	ban := make([][]int, 9)
+	outputString := make([]string, 3)
 
 	fmt.Print("Player 1: Input (x,y) : ")
 
@@ -63,6 +64,8 @@ func main() {
 
 	copy(inputPut, conrvetIntSlice(input))
 	copy(ban, storeBan(inputPut, 1))
-
-	fmt.Println(ban)
+	copy(outputString, generateBanString(ban))
+	for i := 0; i < len(outputString); i++ {
+		fmt.Println(outputString[i])
+	}
 }
