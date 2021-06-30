@@ -133,6 +133,10 @@ func main() {
 				fmt.Printf("Player %d won.\n", playernum)
 				break
 			}
+			if isDraw(ban) {
+				fmt.Println("Draw.")
+				break
+			}
 			if playernum == 1 { //ここで先手・後手交代
 				playernum = 2
 			} else {
