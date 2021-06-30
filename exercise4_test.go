@@ -192,3 +192,42 @@ func TestIsWin5(t *testing.T) {
 		t.Error("TestIsWin5 is failed")
 	}
 }
+
+func TestIsDraw1(t *testing.T) {
+	ban := [][]int{
+		{2, 1, 2},
+		{2, 2, 1},
+		{1, 2, 1},
+	}
+	result := isDraw(ban)
+
+	if result != true {
+		t.Error("TestIsDraw1 is failed")
+	}
+}
+
+func TestIsDraw2(t *testing.T) {
+	ban := [][]int{
+		{2, 1, 2},
+		{0, 2, 1},
+		{1, 2, 1},
+	}
+	result := isDraw(ban)
+
+	if result != false {
+		t.Error("TestIsDraw2 is failed")
+	}
+}
+
+func TestIsDraw3(t *testing.T) {
+	ban := [][]int{
+		{1, 1, 2},
+		{1, 2, 1},
+		{1, 2, 2},
+	}
+	result := isDraw(ban)
+
+	if result != false {
+		t.Error("TestIsDraw3 is failed")
+	}
+}
