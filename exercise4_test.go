@@ -20,6 +20,20 @@ func TestConvert2(t *testing.T) {
 	}
 }
 
+func TestConvert3(t *testing.T) {
+	result := conrvetIntSlice("2")
+	if result[0] != -1 || result[1] != -1 { //resultと"hoge"の型を比較している
+		t.Error("TestConvert3 is failed")
+	}
+}
+
+func TestConvert4(t *testing.T) {
+	result := conrvetIntSlice("e,3")
+	if result[0] != -1 || result[1] != -1 { //resultと"hoge"の型を比較している
+		t.Error("TestConvert4 is failed")
+	}
+}
+
 func TestStoreBan1(t *testing.T) {
 	result := storeBan([]int{1, 2}, 1, [][]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}})
 	if result[1][2] != 1 { //ox関係なく、おかれているかどうかを判定
@@ -55,5 +69,61 @@ func TestGenerateBanString2(t *testing.T) {
 
 	if result[0] != "oo." || result[1] != ".x." || result[2] != "..." {
 		t.Error("TestGenerateBanString2 is failed")
+	}
+}
+
+func TestCanPut1(t *testing.T) {
+	ban := [][]int{
+		{1, 1, 0},
+		{0, 2, 0},
+		{0, 0, 0},
+	}
+	input := []int{1, 1}
+	result := canPut(input, ban)
+
+	if result != false {
+		t.Error("TestCanPut1 is failed")
+	}
+}
+
+func TestCanPut2(t *testing.T) {
+	ban := [][]int{
+		{1, 1, 0},
+		{0, 2, 0},
+		{0, 0, 0},
+	}
+	input := []int{2, 2}
+	result := canPut(input, ban)
+
+	if result != true {
+		t.Error("TestCanPut2 is failed")
+	}
+}
+
+func TestCanPut3(t *testing.T) {
+	ban := [][]int{
+		{1, 1, 0},
+		{0, 2, 0},
+		{0, 0, 0},
+	}
+	input := []int{3, 3}
+	result := canPut(input, ban)
+
+	if result != false {
+		t.Error("TestCanPut3 is failed")
+	}
+}
+
+func TestCanPut4(t *testing.T) {
+	ban := [][]int{
+		{1, 1, 0},
+		{0, 2, 0},
+		{0, 0, 0},
+	}
+	input := []int{-1, -1}
+	result := canPut(input, ban)
+
+	if result != false {
+		t.Error("TestCanPut4 is failed")
 	}
 }
